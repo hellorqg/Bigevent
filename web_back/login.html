@@ -61,7 +61,22 @@
             var uName = $("#userName").val().trim();
             var uPassword = $("#userPassword").val().trim();
 
-            user.userLogin(uName, uPassword);
+            // 用户登录
+            user.userLogin(uName, uPassword, function(res) {
+                // 判断
+                if (uName === "" || uPassword === "") {
+                    $('#myModal').modal('show')
+                    return
+                }
+                // 登录成功
+                if (res.code === 200) {
+                    location.href = "./index.html"
+                } else {
+                    $("#alert").html(res.msg)
+                    $('#myModal').modal('show')
+                }
+
+            });
         })
     </script>
 

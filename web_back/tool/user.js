@@ -2,45 +2,33 @@ var userUrl = "http://localhost:8000";
 
 var user = {
     // 用户登录
-    userLogin: function(uName, uPassword) {
+    userLogin: function(uName, uPassword, huidiao) {
 
         $.post(userUrl + "/admin/login", {
             user_name: uName,
             password: uPassword
-        }, function(res) {
-            console.log(res);
-            // 判断
-            if (uName === "" || uPassword === "") {
-                $('#myModal').modal('show')
-                return
-            }
-            // 登录成功
-            if (res.code === 200) {
-                location.href = "./index.html"
-            } else {
-                $("#alert").html(res.msg)
-                $('#myModal').modal('show')
-            }
+        }, function(a) {
+            console.log(a);
+            huidiao(a)
         })
     },
 
     // 获取用户信息
-    userInfo: function() {
+    userInfo: function(huidiao) {
         $.get(userUrl + "/admin/getuser", function(res) {
 
             // console.log(res);
-            $("#userName").html(res.data.nickname);
-            $(".userImg").prop("src", res.data.user_pic)
+            huidiao(res)
 
         })
     },
 
     // 用户退出
 
-    userLogout: function() {
-        $.get(userUrl + "/admin/getuser", function(res) {
+    userLogout: function(huidiao) {
+        $.get(userUrl + "/admin/getuser", function() {
             // console.log(res);
-            location.href = "./login.html"
+            huidiao()
         })
     },
 

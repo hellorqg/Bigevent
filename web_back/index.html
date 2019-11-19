@@ -111,12 +111,17 @@
         // 登出
         $("#btn_logout").click(function() {
 
-            user.userLogout();
+            user.userLogout(function() {
+                location.href = "./login.html"
+            });
 
         });
 
         // 发送请求 获取数据 更改用户信息
-        user.userInfo();
+        user.userInfo(function(res) {
+            $("#userName").html(res.data.nickname);
+            $(".userImg").prop("src", res.data.user_pic)
+        });
     </script>
 </body>
 
