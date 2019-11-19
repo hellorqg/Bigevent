@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/iconfont.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script src="./js/jquery-1.12.4.min.js"></script>
 </head>
 
 <body>
@@ -23,13 +24,46 @@
             <form class="login_form">
                 <i class="iconfont icon-user"></i>
                 <i class="iconfont icon-key"></i>
-                <input type="text" class="input_txt" placeholder="邮箱/手机号">
-                <input type="password" class="input_pass" placeholder="密码">
-                <input type="submit" class="input_sub" value="登 录">
+                <input type="text" class="input_txt" id="userName" placeholder="邮箱/手机号">
+                <input type="password" class="input_pass" id="userPassword" placeholder="密码">
+                <input type="button" class="input_sub" value="登 录">
             </form>
         </div>
 
-    </div> 
+    </div>
+
+    <script>
+        // 点击发送请求 获取输入框内的信息 判断
+        // console.log(1);
+        $(".input_sub").click(function() {
+
+            var uName = $("#userName").val().trim();
+            var uPassword = $("#userPassword").val().trim();
+
+            $.post("http://localhost:8000/admin/login", {
+                user_name: uName,
+                password: uPassword
+            }, function(res) {
+                console.log(res);
+                // 判断
+                if (uName === "" || uPassword === "") {
+                    alert("用户名或者密码为空")
+                    return
+                }
+                // 登录成功
+                if (res.code === 200) {
+
+                    location.href = "./index.html"
+
+                } else {
+                    alert(res.msg)
+                }
+
+            })
+
+
+        })
+    </script>
 
 </body>
 
