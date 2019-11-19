@@ -39,7 +39,7 @@
                     <h4 class="modal-title">Modal title</h4>
                 </div>
                 <div class="modal-body">
-                    <p>用户名或者密码为空</p>
+                    <p id="alert">用户名或者密码为空</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -54,9 +54,8 @@
 
     <script src="./js/bootstrap/js/bootstrap.min.js"></script>
     <script>
-        $('#myModal').modal('show')
-            // 点击发送请求 获取输入框内的信息 判断
-            // console.log(1);
+        // 点击发送请求 获取输入框内的信息 判断
+        // console.log(1);
         $(".input_sub").click(function() {
 
             var uName = $("#userName").val().trim();
@@ -69,7 +68,7 @@
                 console.log(res);
                 // 判断
                 if (uName === "" || uPassword === "") {
-                    alert("用户名或者密码为空")
+                    $('#myModal').modal('show')
                     return
                 }
                 // 登录成功
@@ -78,7 +77,9 @@
                     location.href = "./index.html"
 
                 } else {
-                    alert(res.msg)
+                    $("#alert").html(res.msg)
+                    $('#myModal').modal('show')
+
                 }
 
             })
