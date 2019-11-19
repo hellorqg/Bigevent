@@ -53,38 +53,15 @@
     <!-- /.modal -->
 
     <script src="./js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./tool/user.js"></script>
     <script>
         // 点击发送请求 获取输入框内的信息 判断
         // console.log(1);
         $(".input_sub").click(function() {
-
             var uName = $("#userName").val().trim();
             var uPassword = $("#userPassword").val().trim();
 
-            $.post("http://localhost:8000/admin/login", {
-                user_name: uName,
-                password: uPassword
-            }, function(res) {
-                console.log(res);
-                // 判断
-                if (uName === "" || uPassword === "") {
-                    $('#myModal').modal('show')
-                    return
-                }
-                // 登录成功
-                if (res.code === 200) {
-
-                    location.href = "./index.html"
-
-                } else {
-                    $("#alert").html(res.msg)
-                    $('#myModal').modal('show')
-
-                }
-
-            })
-
-
+            user.userLogin(uName, uPassword);
         })
     </script>
 

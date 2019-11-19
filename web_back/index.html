@@ -106,20 +106,17 @@
         }
     </script>
     <script src="./js/jquery-1.12.4.min.js"></script>
+    <script src="./tool/user.js"></script>
     <script>
         // 登出
         $("#btn_logout").click(function() {
-            location.href = "./login.html"
-        })
+
+            user.userLogout();
+
+        });
 
         // 发送请求 获取数据 更改用户信息
-        $.get("http://localhost:8000/admin/getuser", function(res) {
-
-            console.log(res);
-            $("#userName").html(res.data.nickname);
-            $(".userImg").prop("src", res.data.user_pic)
-
-        })
+        user.userInfo();
     </script>
 </body>
 
