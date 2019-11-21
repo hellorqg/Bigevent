@@ -99,7 +99,7 @@
             <td>{{item.slug}}</td>
             <td class="text-center">
                 <a href="javascript:editTr({&quot;id&quot;:&quot;2&quot;,&quot;slug&quot;:&quot;funny&quot;,&quot;name&quot;:&quot;奇趣事&quot;});" class="btn btn-info btn-xs">编辑</a>
-                <a href="javascript:deleteTr( 2 );" class="btn btn-danger btn-xs" id="del">删除</a>
+                <a href="javascript:;" class="btn btn-danger btn-xs del" data-id={{item.id}}>删除</a>
             </td>
         </tr>
 
@@ -112,21 +112,12 @@
 
         function getAndShow() {
             cate.show(function(res) {
-
                 var str = template("mb", res)
                     // console.log(str);
                 $("#catelist").html(str);
-
             })
         }
-
         getAndShow();
-
-
-        // // 点击删除
-        // $("#del").on("click",function(){
-
-        // })
 
         // 点击创建
         $("#model_add").click(function() {
@@ -150,6 +141,21 @@
             // alert('shutoff');
             $('#addModal').modal('hide');
         });
+
+
+
+        // 点击删除
+        $("#catelist").on("click", ".del", function(res) {
+            // 获取当前点击项的ID
+            var id = $(this).attr("data-id")
+            console.log(id);
+
+            cate.del(id, function(res) {
+
+            })
+
+
+        })
     </script>
 
 </body>
