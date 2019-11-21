@@ -8,6 +8,8 @@ var APIURLS = {
 
 
     // 文章类别
-    category_search: userUrl + "admin/category_search"
+    category_search: userUrl + "admin/category_search",
+    categort_add: userUrl + "admin/category_add",
+
 
 }

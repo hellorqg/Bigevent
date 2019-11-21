@@ -29,20 +29,11 @@
                     </tr>
                 </thead>
                 <tbody id="catelist">
-                    <!-- <tr>
-                        <td>未分类</td>
-                        <td>uncategorized</td>
-                        <td class="text-center">
-                            <a href="javascript:editTr({&quot;id&quot;:&quot;1&quot;,&quot;slug&quot;:&quot;uncategorized&quot;,&quot;name&quot;:&quot;未分类&quot;});" class="btn btn-info btn-xs">编辑</a>
-                            <a href="javascript:deleteTr( 1 );" class="btn btn-danger btn-xs">删除</a>
-                        </td>
-                    </tr> -->
-
                 </tbody>
                 <tfoot>
                     <tr>
                         <td colspan="3" class="text-center">
-                            <a href="#" class="btn btn-success" data-toggle="modal" data-target="#addModal">新增分类</a>
+                            <a href="#" class="btn btn-success" data-toggle="modal" data-target="#addModal" id="add_cate">新增分类</a>
                         </td>
                     </tr>
                 </tfoot>
@@ -61,11 +52,11 @@
                     <form>
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">分类名称:</label>
-                            <input type="text" class="form-control" id="recipient-name">
+                            <input type="text" class="form-control" id="cate_add_content">
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">分类别名:</label>
-                            <input type="text" class="form-control" id="recipient-name">
+                            <input type="text" class="form-control" id="cate_add_slug">
                         </div>
                     </form>
                 </div>
@@ -77,19 +68,16 @@
         </div>
     </div>
 
-    <script>
+    <!-- <script>
         $('#addModal').modal({
             show: false,
             backdrop: false
         });
 
-        $('#model_shutoff').click(function() {
-            // alert('shutoff');
-            $('#addModal').modal('hide');
-        });
+
 
         $('#model_add').click(function() {
-            alert('add');
+            // alert('add');
             $('#addModal').modal('hide');
         });
 
@@ -99,7 +87,7 @@
                 $('#addModal').modal('show');
             }
         })
-    </script>
+    </script> -->
     <script src="./tool/APIURLS.js"></script>
     <script src="./tool/pra_category.js"></script>
     <script src="./js/template-web.js"></script>
@@ -141,6 +129,27 @@
         // })
 
         // 点击创建
+        $("#model_add").click(function() {
+            // 获取信息
+            var inpname = $("#cate_add_content").val().trim();
+            var inpslug = $("#cate_add_slug").val().trim();
+            // 发送请求
+            if (inpname == "" || inpslug == "") {
+                return
+            };
+            cate.add(inpname, inpslug, function(res) {
+                console.log(res);
+
+                // if (res.code == "200") {
+                //     getAndShow();
+                // }
+            })
+
+        })
+        $('#model_shutoff').click(function() {
+            // alert('shutoff');
+            $('#addModal').modal('hide');
+        });
     </script>
 
 </body>
