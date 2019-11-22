@@ -22,9 +22,13 @@ var cate = {
             huidiao(res);
             console.log(res);
         })
+    },
+
+    edit: function(id, name, slug, huidiao) {
+        $.post("", { id: id, name: name, slug: slug }, function(res) {
+            huidiao(res)
+        })
     }
-
-
 
 
 }

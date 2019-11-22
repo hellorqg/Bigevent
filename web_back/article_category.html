@@ -71,21 +71,11 @@
     <!-- <script>
         $('#addModal').modal({
             show: false,
-            backdrop: false
+            backdrop: false,
         });
-
-
-
         $('#model_add').click(function() {
             // alert('add');
             $('#addModal').modal('hide');
-        });
-
-        $('.category_table').delegate('a', 'click', function() {
-            if ($(this).hasClass('btn-info')) {
-                $('#addModal .modal-title').html('修改分类名称');
-                $('#addModal').modal('show');
-            }
         })
     </script> -->
     <script src="./tool/APIURLS.js"></script>
@@ -98,7 +88,7 @@
             <td>{{item.name}}</td>
             <td>{{item.slug}}</td>
             <td class="text-center">
-                <a href="javascript:editTr({&quot;id&quot;:&quot;2&quot;,&quot;slug&quot;:&quot;funny&quot;,&quot;name&quot;:&quot;奇趣事&quot;});" class="btn btn-info btn-xs">编辑</a>
+                <a href="javascript:;" class="btn btn-info btn-xs edit">编辑</a>
                 <a href="javascript:;" class="btn btn-danger btn-xs del" data-id={{item.id}}>删除</a>
             </td>
         </tr>
@@ -119,21 +109,24 @@
         }
         getAndShow();
 
+        var inpname = $("#cate_add_content").val().trim();
+        var inpslug = $("#cate_add_slug").val().trim();
         // 点击创建
         $("#model_add").click(function() {
             // 获取信息
-            var inpname = $("#cate_add_content").val().trim();
-            var inpslug = $("#cate_add_slug").val().trim();
+
             // 发送请求
             if (inpname == "" || inpslug == "") {
+                alert("输入为空")
                 return
             };
             cate.add(inpname, inpslug, function(res) {
                 console.log(res);
 
-                // if (res.code == "200") {
-                //     getAndShow();
-                // }
+                if (res.code == "200") {
+                    getAndShow();
+                }
+                $('#addModal').modal('hide');
             })
 
         })
@@ -146,15 +139,29 @@
 
         // 点击删除
         $("#catelist").on("click", ".del", function(res) {
+
+            if (res.code == 400) {
+                alert(res.msg)
+            }
+            // var ff = window.confirm("确定删除?")
+            // if (ff == false) {
+            //     return
+            // }
+
             // 获取当前点击项的ID
             var id = $(this).attr("data-id")
             console.log(id);
+            cate.del(id, function(res) {})
+        })
 
-            cate.del(id, function(res) {
-
-            })
-
-
+        // 点击编辑
+        $("#catelist").on("click", ".edit", function() {
+            // 获取id 名称 别名
+            var id = $(this).attr("data-id");
+            cate.edit(id, inpname, inpslug, function(res) {})
+        })
+        $(".btn-info").click(function() {
+            $('#addModal').show('hide');
         })
     </script>
 
