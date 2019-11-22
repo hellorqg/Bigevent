@@ -4,7 +4,7 @@ var cate = {
         $.get(APIURLS.category_search, function(res) {
 
             huidiao(res)
-            console.log(res);
+                // console.log(res);
         })
     },
 
@@ -20,12 +20,12 @@ var cate = {
     del: function(id, huidiao) {
         $.post(APIURLS.categort_del, { id: id }, function(res) {
             huidiao(res);
-            console.log(res);
+            // console.log(res);
         })
     },
 
     edit: function(id, name, slug, huidiao) {
-        $.post("", { id: id, name: name, slug: slug }, function(res) {
+        $.post(APIURLS.categort_edit, { id: id, name: name, slug: slug }, function(res) {
             huidiao(res)
         })
     }

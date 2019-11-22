@@ -11,5 +11,5 @@ var APIURLS = {
     category_search: userUrl + "admin/category_search",
     categort_add: userUrl + "admin/category_add",
     categort_del: userUrl + "admin/category_delete",
-
+    categort_edit: userUrl + "admin/category_edit",
 }
