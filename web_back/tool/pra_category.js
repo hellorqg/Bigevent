@@ -20,7 +20,7 @@ var cate = {
     del: function(id, huidiao) {
         $.post(APIURLS.categort_del, { id: id }, function(res) {
             huidiao(res);
-            console.log(res);
+            // console.log(res);
         })
     }
 
