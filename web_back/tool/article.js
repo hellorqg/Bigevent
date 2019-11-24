@@ -30,7 +30,21 @@ var article = {
             function(res) {
                 huidiao(res)
             }
+    },
+
+
+    // 发布文章
+    add: function(fd, huidiao) {
+        $.ajax({
+            url: APIURLS.article_add,
+            type: "post",
+            contentType: false,
+            processData: false,
+            data: fd,
+            succsess: function(res) {
+
+                huidiao(res)
+            }
+        })
     }
-
-
 }
