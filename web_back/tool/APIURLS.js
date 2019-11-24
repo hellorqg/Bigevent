@@ -14,5 +14,8 @@ var APIURLS = {
     categort_edit: userUrl + "admin/category_edit",
 
     // 获取文章
-    artlcle_show: userUrl + "admin/search"
+    artlcle_show: userUrl + "admin/search",
+    article_get: userUrl + "admin/category_search",
+    article_del: userUrl + "admin/article_delete",
+
 }
