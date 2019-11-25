@@ -20,6 +20,4 @@ var APIURLS = {
     article_add: userUrl + "admin/article_publish",
     article_edit: userUrl + "admin/article_edit",
 
-    // 游客界面
-    ,
 }
