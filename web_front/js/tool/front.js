@@ -7,6 +7,15 @@ var front = {
         }, function(res) {
             huidiao(res)
         })
-    }
+    },
 
+    // 展示评论
+    commenShow: function(id, huidiao) {
+        $.get(APIURLS.comment_show, {
+                "article_id": id,
+            },
+            function(res) {
+                huidiao(res)
+            })
+    }
 }

@@ -21,5 +21,5 @@ var APIURLS = {
     article_edit: userUrl + "admin/article_edit",
 
     // 游客界面
-    ,
+    comment_show: userUrl + "get_comments",
 }
