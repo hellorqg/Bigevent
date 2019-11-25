@@ -23,29 +23,25 @@
             文章编辑
         </div>
         <div class="container-fluid common_con">
-            <form class="form-horizontal article_form">
+            <form class="form-horizontal article_form" id="myform">
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">文章标题：</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail3" value="文章标题文字">
+                        <input type="email" class="form-control" name="title" id="inputEmail3" value="文章标题文字">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-2 control-label">文章封面：</label>
                     <div class="col-sm-10">
                         <img src="images/pic06.jpg" class="article_cover">
-                        <input type="file" id="exampleInputFile">
+                        <input type="file" id="exampleInputFile" name="cover">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">文章类别：</label>
                     <div class="col-sm-4">
-                        <select class="form-control">
-                            <option>类别一</option>
-                            <option>类别二</option>
-                            <option>类别三</option>
-                            <option selected>类别四</option>
-                            <option>类别五</option>
+                        <select class="form-control" id="categoryContainer" name="type">
+            
                         </select>
                     </div>
                 </div>
@@ -54,7 +50,7 @@
                     <div class="col-sm-4">
 
                         <div class="input-group">
-                            <input type="text" class="form-control" value="2019-05-17" id="dateinput">
+                            <input type="text" class="form-control" name="date" value="2019-05-17" id="dateinput">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button"
                                     onclick="jeDate('#dateinput',{trigger:false,format: 'YYYY-MM-DD'})"><i
@@ -66,18 +62,77 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">文章内容：</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="rich_content" name="content" placeholder="文章内容" value="文章内容">
+                        <input type="text" class="form-control" id="rich_content" name="content" placeholder="文章内容" value="文章内容" name="content">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success">修改</button>
+                        <button type="button" class="btn btn-success" id="article_edit">修改</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+    <script type="text/html" id="article_cate">
+        {{each data item}}
+        <option value="{{item.id}}">{{item.name}}</option>
+        {{/each}}
+    </script>
+    <script src="./tool/APIURLS.js"></script>
+    <script src="./tool/article.js"></script>
+    <script src="./js/template-web.js"></script>
+    <script>
+        // 获取对应文章 展示
+        // 截取地址栏的id
+        var id = location.search.substr(4);
 
+
+        // 获取文章详情
+        article.detail(id, function(res) {
+            // 接口type需要number类型数据
+            var type_number = res.data.type;
+            // console.log(type_number);
+            // // 类别
+            var tipid = res.data.type
+
+
+            // console.log(res);
+            // 标题
+            $("#inputEmail3").val(res.data.title);
+            // 封面
+            $(".article_cover").prop("src", res.data.cover);
+            // 时间
+            $("#dateinput").val(res.data.date);
+            // 内容
+            $("#rich_content").val(res.data.content);
+            // 获取文章类别
+            article.get(function(res) {
+                // console.log(res);
+                var htmlStr = template("article_cate", res);
+                console.log(res);
+
+                $("#categoryContainer").html(htmlStr);
+                $("#categoryContainer").val(tipid);
+                // console.log($("#articleCate").val())
+                //展示 类别
+                // $("#categoryContainer").val(tipid);
+            })
+        })
+
+
+        $("#article_edit").click(function() {
+            // console.log(1);
+            // 修改
+            var fd = new FormData(document.getElementById("myform"));
+            fd.append("id", id);
+
+            console.log(fd.get("type"));
+            article.edit(fd, function(res) {
+                // console.log(res);
+
+            })
+        })
+    </script>
 </body>
 
 </html>

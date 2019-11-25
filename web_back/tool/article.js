@@ -38,13 +38,35 @@ var article = {
         $.ajax({
             url: APIURLS.article_add,
             type: "post",
+            data: fd,
             contentType: false,
             processData: false,
-            data: fd,
             succsess: function(res) {
 
                 huidiao(res)
             }
+        })
+    },
+
+    // 编辑文章
+    edit: function(fd, huidiao) {
+        $.ajax({
+            type: "post",
+            url: APIURLS.article_edit,
+            data: fd,
+            contentType: false,
+            processData: false,
+            succsess: function(res) {
+                huidiao(res)
+            }
+        })
+    },
+    // 详情
+    detail: function(id, huidiao) {
+        $.get(APIURLS.artlcle_show, {
+            id: id
+        }, function(res) {
+            huidiao(res)
         })
     }
 }
