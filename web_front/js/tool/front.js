@@ -10,12 +10,22 @@ var front = {
     },
 
     // 展示评论
-    commenShow: function(id, huidiao) {
-        $.get(APIURLS.comment_show, {
+    commentShow: function(id, huidiao) {
+        $.get(api.comment_show, {
                 "article_id": id,
             },
             function(res) {
                 huidiao(res)
             })
+    },
+
+    commentAdd: function(name, content, article_id, huidiao) {
+        $.post(api.comment_add, {
+            name: name,
+            content: content,
+            article_id: article_id,
+        }, function(res) {
+            huidiao(res)
+        })
     }
 }

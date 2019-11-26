@@ -1,5 +1,4 @@
 var userUrl = "http://localhost:8000/";
-
 var APIURLS = {
 
     user_login: userUrl + "admin/login",
@@ -21,5 +20,5 @@ var APIURLS = {
     article_edit: userUrl + "admin/article_edit",
 
     // 游客界面
-    comment_show: userUrl + "get_comments",
+
 }

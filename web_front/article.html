@@ -85,7 +85,7 @@
                 </div>
                 <div class="form_group">
                     <label>评论内容：</label>
-                    <textarea placeholder="请发表您的评论" class="comment_input"></textarea>
+                    <textarea placeholder="请发表您的评论" class="comment_input" id="comment_user"></textarea>
                 </div>
                 <div class="form_group">
                     <input type="button" name="" value="评 论" class="comment_sub"></div>
@@ -96,13 +96,13 @@
             </div>
 
             <div class="comment_list_con">
-                <div class="comment_detail_list">
-                    <!-- <div class="person_pic fl">乔</div>
+                <!-- <div class="comment_detail_list">
+                    <div class="person_pic fl">乔</div>
                     <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
                     <div class="comment_text fl">
                         遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-                    </div> -->
-                </div>
+                    </div>
+                </div> -->
 
 
             </div>
@@ -183,15 +183,28 @@
         <p>CopyRight © 2019 深圳大事件信息技术股份有限公司 All Rights Reserved</p>
         <p>电话：0755-****888 粤ICP备*******8号</p>
     </div>
+    <!-- 评论模板 -->
+    <script type="text/html" id="comments">
+        {{each data item}}
+        <div class="comment_detail_list">
+            <div class="person_pic fl">{{item.name.substr(0,1)}}</div>
+            <div class="name_time fl"><b>{{item.name}}</b><span>{{item.dt}}</span></div>
+            <div class="comment_text fl">
+                {{item.content}}
+            </div>
+        </div>
+        {{/each}}
+    </script>
     <script src="./js/jquery-1.12.4.min.js"></script>
     <script src="./js/template-web.js"></script>
     <script src="./js/tool/APIURLS.js"></script>
+    <script src="./js/tool/front_APIURLS.js"></script>
     <script src="./js/tool/pra_category.js"></script>
     <script src="./js/tool/article.js"></script>
     <script src="./js/tool/front.js"></script>
     <script>
         let id = location.search.substr(4);
-        // console.log(id);
+        console.log(id);
 
         let cate_id;
         article.detail(id, function(res) {
@@ -208,32 +221,51 @@
             cate.show(function(res) {
                 // console.log(res);
                 let thisid = res.data.find(function(item) {
-                    if (item.id == cate_id) {
-                        return true
-                    }
-                })
-                console.log(thisid);
-                // 类型
+                        if (item.id == cate_id) {
+                            return true
+                        }
+                    })
+                    // console.log(thisid);
+                    // 类型
                 $("#top_cate").html(thisid.name);
                 $("#under_cate").html(thisid.name);
             })
         })
 
         // 展示评论
-        front.commenShow(id, function(res) {
-            console.log(res);
+        let getAndShow = function() {
+            // $.get(userUrl + "get_comments", {
+            //     article_id: id
+            // }, function(res) {
+            //     console.log(res);
 
+            // })
+            front.commentShow(id, function(res) {
+                console.log(res);
+                res.data.reverse();
+                let htmlStr = template("comments", res);
+                $(".comment_list_con").html(htmlStr)
+            })
+        }
+        getAndShow()
+
+        // 添加评论
+
+        $(".comment_sub").click(function() {
+            let userName = $(".comment_name").val().trim();
+            let userComment = $("#comment_user").val();
+            console.log(userComment);
+
+            if (userName == "" || userComment == "") {
+                alert("不能为空")
+                return
+            }
+            // 发送请求展示评论
+            front.commentAdd(userName, userComment, id, function(res) {
+                console.log(res);
+                getAndShow()
+            })
         })
-
-        // 获取评论
-        // $(".comment_sub").click(function() {
-        //     let userName = $(".comment_name").val();
-        //     let userComment = $(".comment_input").val();
-        //     // 发送请求展示评论
-        //     front.commenShow(id, function(res) {
-        //         console.log(res);
-        //     })
-        // })
     </script>
 </body>
 
