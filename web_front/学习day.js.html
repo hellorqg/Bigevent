@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="./js/dayjs/dayjs.min.js"></script>
+    <script src="./js/dayjs/relative.min.js"></script>
+    <script src="./js/dayjs/zh_cn.js"></script>
+    <script>
+        // console.log(dayjs().year());
+        // let sj = dayjs().month(0)
+        // let sj = dayjs().day()
+        // let sj = dayjs().millisecond()
+        // let sj = dayjs().add(7, 'day')
+        // let sj = dayjs.extend(dayjs_plugin_relativeTime)
+        // dayjs.locale('zh-cn');
+        dayjs.locale('zh-cn'); // 全局设置，中文
+        dayjs.extend(dayjs_plugin_relativeTime);
+        console.log(dayjs().toNow());
+    </script>
+</body>
+
+</html>

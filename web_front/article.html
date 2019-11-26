@@ -188,7 +188,7 @@
         {{each data item}}
         <div class="comment_detail_list">
             <div class="person_pic fl">{{item.name.substr(0,1)}}</div>
-            <div class="name_time fl"><b>{{item.name}}</b><span>{{item.dt}}</span></div>
+            <div class="name_time fl"><b>{{item.name}}</b><span>{{item.nowDt}}</span></div>
             <div class="comment_text fl">
                 {{item.content}}
             </div>
@@ -202,7 +202,18 @@
     <script src="./js/tool/pra_category.js"></script>
     <script src="./js/tool/article.js"></script>
     <script src="./js/tool/front.js"></script>
+
+    <script src="./js/dayjs/dayjs.min.js"></script>
+    <script src="./js/dayjs/zh_cn.js"></script>
+    <script src="./js/dayjs/relative.min.js"></script>
+    <!-- <script src="./"></script> -->
     <script>
+        dayjs.locale('zh-cn');
+
+        dayjs.extend(dayjs_plugin_relativeTime);
+
+
+
         let id = location.search.substr(4);
         console.log(id);
 
@@ -242,19 +253,25 @@
             // })
             front.commentShow(id, function(res) {
                 console.log(res);
+                res.data.forEach(function(item) {
+                    item.nowDt = dayjs(item.dt).toNow()
+                        // console.log(a);
+
+                })
                 res.data.reverse();
                 let htmlStr = template("comments", res);
                 $(".comment_list_con").html(htmlStr)
             })
         }
         getAndShow()
-
-        // 添加评论
+            // 添加评论
+            // let day =
 
         $(".comment_sub").click(function() {
             let userName = $(".comment_name").val().trim();
             let userComment = $("#comment_user").val();
             console.log(userComment);
+
 
             if (userName == "" || userComment == "") {
                 alert("不能为空")
